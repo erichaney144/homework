@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 
-export async function listOrdersController(
+export async function homeController(
 	req: Request,
 	res: Response
 ): Promise<void> {
-	res.send('List Orders!')
+	res.send('Shop!')
 }

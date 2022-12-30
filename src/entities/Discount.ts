@@ -6,7 +6,7 @@ export enum DiscountType {
 	fixed = 'FIXED',
 }
 
-export class Discount extends BaseEntity<Discount> {
+export class Discount<T> extends BaseEntity<T | Discount<T>> {
 	code: string
 	amount: number
 	type: DiscountType
