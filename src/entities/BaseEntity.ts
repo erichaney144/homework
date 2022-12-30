@@ -1,9 +1,9 @@
-export class BaseEntity {
-	constructor(data = {}) {
-		Object.assign(this, data)
-	}
+export class BaseEntity<T> {
+	id?: number
 
-	id: number
+	constructor(args: Partial<T> = {}) {
+		Object.assign(this, args)
+	}
 
 	// TODO: implement proper persistance
 	static instances: { [key: string]: { [key: number]: object } } = {}

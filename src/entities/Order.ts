@@ -1,10 +1,11 @@
 import { BaseEntity } from './BaseEntity'
 import { OrderItem } from './OrderItem'
 
-export class Order extends BaseEntity {
+export class Order extends BaseEntity<Order> {
 	items: OrderItem[]
 	discountCode: string
 	discountAmount: number
+
 	subTotal() {
 		return this.items.reduce(
 			(subtotal, item) => (subtotal += item.extendedPrice()),

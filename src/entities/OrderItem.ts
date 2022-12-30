@@ -1,7 +1,7 @@
 import { BaseEntity } from './BaseEntity'
 import { Product } from './Product'
 
-export class OrderItem extends BaseEntity {
+export class OrderItem extends BaseEntity<OrderItem> {
 	product: Product
 	quantity: number
 	price: number
