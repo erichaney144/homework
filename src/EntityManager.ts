@@ -6,7 +6,12 @@ export class EntityManager {
 
 	static all<T>(entityClass: typeof BaseEntity) {
 		const entities = EntityManager.instances[entityClass.name]
-		return entities ? (Object.values(entities) as T[]) : []
+		if (!entities) {
+			return []
+		}
+		/** Technically sorting is not guaranteed, so let's sort them by id */
+		const arr = Object.values(entities) as BaseEntity<T>[]
+		return arr.sort((a, b) => (a.id && b.id ? a.id - b.id : 0))
 	}
 
 	static save<T extends BaseEntity<T>>(entity: T) {
