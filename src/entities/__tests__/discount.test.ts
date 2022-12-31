@@ -1,5 +1,6 @@
 import { Discount, DiscountType } from 'entities/Discount'
 import { Order } from 'entities/Order'
+import { EntityManager } from 'EntityManager'
 
 describe('Discount', () => {
 	it('calculates discount amount for fixed discounts', () => {
@@ -42,5 +43,16 @@ describe('Discount', () => {
 				subTotal: () => 8,
 			} as Order)
 		}).toThrow()
+	})
+
+	it('finds a discount by code', () => {
+		const d = new Discount({
+			code: 'NEW_DISCOUNT_85',
+			type: DiscountType.percent,
+			amount: 111.45,
+		})
+		EntityManager.save(d)
+		const d2 = Discount.findByCode(d.code)
+		expect(d2?.amount).toBe(d.amount)
 	})
 })

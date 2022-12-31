@@ -37,6 +37,6 @@ export class Discount<T> extends BaseEntity<T | Discount<T>> {
 	}
 
 	static findByCode(code: string) {
-		return EntityManager.find(Discount, { code })
+		return EntityManager.findOne(Discount, { code })
 	}
 }

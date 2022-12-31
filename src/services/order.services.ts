@@ -21,7 +21,7 @@ export const createOrderService = (
 	const errors: string[] = []
 
 	try {
-		const discount = EntityManager.findOne(Discount, { code: req.discount })
+		const discount = Discount.findByCode(req.discount)
 		if (req.discount && !discount) {
 			errors.push(`Discount not found: ${req.discount}`)
 		} else if (
@@ -37,7 +37,7 @@ export const createOrderService = (
 			order.items = orderItems
 			errors.push(...itemErrors)
 		} else {
-			errors.push('Your order must have items')
+			errors.push('The order must have items')
 		}
 
 		if (errors.length === 0) {
