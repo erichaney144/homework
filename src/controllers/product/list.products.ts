@@ -1,10 +1,10 @@
-import { Order } from 'entities/Order'
+import { Product } from 'entities/Product'
 import { EntityManager } from 'EntityManager'
 import { Request, Response } from 'express'
 
-export async function listOrdersController(
+export async function listProductsController(
 	req: Request,
 	res: Response
 ): Promise<void> {
-	res.json(EntityManager.all(Order))
+	res.json(EntityManager.all(Product))
 }

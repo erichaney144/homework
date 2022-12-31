@@ -15,7 +15,7 @@ export class EntityManager {
 	}
 
 	static save<T extends BaseEntity<T>>(entity: T) {
-		const entityClassName = entity.constructor.name
+		let entityClassName = this.getChildOfBaseEntityName(entity)
 		if (!EntityManager.instances[entityClassName]) {
 			EntityManager.instances[entityClassName] = {}
 		}
@@ -35,5 +35,39 @@ export class EntityManager {
 			entity.id = maxId + 1
 		}
 		entities[entity.id] = entity
+	}
+
+	static getChildOfBaseEntityName(entity: any) {
+		// Go up until just before BaseEntity
+		let prototype = Object.getPrototypeOf(entity)
+		while (
+			prototype &&
+			entity instanceof BaseEntity &&
+			Object.getPrototypeOf(prototype).constructor.name != BaseEntity.name
+		) {
+			prototype = Object.getPrototypeOf(prototype)
+		}
+		return prototype.constructor.name
+	}
+
+	static find<T extends BaseEntity<T>>(
+		klass: { prototype: T },
+		filters: Partial<{ [key in keyof T]: string | number }>
+	): T[] {
+		// not correct typing
+		const entities = EntityManager.all(klass as unknown as typeof BaseEntity)
+		return entities.filter(e => {
+			return Object.entries(filters).reduce((allMatch, [k, v]) => {
+				return allMatch && (e as any)[k] === v
+			}, true)
+		}) as T[]
+	}
+
+	static findOne<T extends BaseEntity<T>>(
+		klass: { prototype: T },
+		filters: Partial<{ [key in keyof T]: string | number }>
+	): T | null {
+		const matches = EntityManager.find(klass, filters)
+		return matches && matches.length ? matches[0] : null
 	}
 }

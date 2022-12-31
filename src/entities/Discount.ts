@@ -1,3 +1,4 @@
+import { EntityManager } from 'EntityManager'
 import { BaseEntity } from './BaseEntity'
 import { Order } from './Order'
 
@@ -33,5 +34,9 @@ export class Discount<T> extends BaseEntity<T | Discount<T>> {
 			)
 		}
 		return discountAmount
+	}
+
+	static findByCode(code: string) {
+		return EntityManager.find(Discount, { code })
 	}
 }

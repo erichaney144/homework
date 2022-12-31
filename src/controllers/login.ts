@@ -4,5 +4,6 @@ export async function loginController(
 	req: Request,
 	res: Response
 ): Promise<void> {
-	res.send('Login!')
+	req.session.username = req.body.username
+	res.json({ success: true })
 }

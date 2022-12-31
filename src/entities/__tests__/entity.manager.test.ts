@@ -1,6 +1,9 @@
+import { BaseEntity } from 'entities/BaseEntity'
 import { Discount, DiscountType } from 'entities/Discount'
+import { EveryNthOrderDiscount } from 'entities/EveryNthOrderDiscount'
 import { Product } from 'entities/Product'
 import { EntityManager } from 'EntityManager'
+import { seedProducts } from 'seeds/seed.products'
 
 beforeEach(() => {
 	EntityManager.instances = {}
@@ -48,5 +51,34 @@ describe('EntityManager', () => {
 		const discounts = EntityManager.all(Discount) as { code: string }[]
 		expect(discounts.length).toBe(1)
 		expect(discounts[0]?.code).toBe('DISCOUNT_123')
+	})
+
+	it('returns a guitar worth $150', () => {
+		seedProducts()
+		const product = EntityManager.findOne(Product, { name: 'Guitar' })
+		expect(product?.name).toBe('Guitar')
+		expect(product?.price).toBe(150)
+	})
+
+	describe('static getChildOfBaseEntityName method behavior', () => {
+		it('returns the class name when class is child of BaseEntity', () => {
+			class Foo extends BaseEntity<Foo> {}
+			expect(EntityManager.getChildOfBaseEntityName(new Foo())).toBe('Foo')
+		})
+
+		it('returns the child class name when class is greatgrandchild of BaseEntity', () => {
+			class Child extends BaseEntity<Child> {}
+			class GrandChild extends Child {}
+			class GreatGrandChild extends GrandChild {}
+			expect(
+				EntityManager.getChildOfBaseEntityName(new GreatGrandChild())
+			).toBe('Child')
+		})
+
+		it('returns Discount for instance of EveryNthOrderDiscount', () => {
+			expect(
+				EntityManager.getChildOfBaseEntityName(new EveryNthOrderDiscount())
+			).toBe('Discount')
+		})
 	})
 })
