@@ -18,15 +18,24 @@ declare module 'express-session' {
 		username: string
 	}
 }
+declare global {
+	namespace NodeJS {
+		interface ProcessEnv {
+			SESSION_SECRET: string
+			PORT?: string
+			NODE_ENV: 'development' | 'production'
+		}
+	}
+}
 
 const app = express()
-const port = 8080 // default port to listen
+const port = process.env.PORT || 8080 // default port to listen
 
 seedProducts()
 seedDiscounts()
 
 app.use(bodyParser.json())
-app.use(session())
+app.use(session({ secret: process.env.SESSION_SECRET || 'secret' }))
 
 // define a route handler for the default home page
 app.get('/', homeController)
