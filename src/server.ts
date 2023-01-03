@@ -1,7 +1,6 @@
 import { updateDiscountController } from 'controllers/admin/discount/update.discount'
 import { listOrdersController } from 'controllers/admin/order/list.orders'
 import { getDiscountByCodeController } from 'controllers/discount/by.code'
-import { homeController } from 'controllers/home'
 import { loginController } from 'controllers/login'
 import { logoutController } from 'controllers/logout'
 import { createOrderController } from 'controllers/order/create.order'
@@ -39,7 +38,6 @@ app.use(
 )
 
 // define a route handler for the default home page
-app.get('/', homeController)
 app.get('/products', listProductsController)
 app.post('/login', loginController)
 app.post('/logout', logoutController)
@@ -47,7 +45,7 @@ app.post('/order', createOrderController)
 app.get('/discount/:code', getDiscountByCodeController)
 
 app.get('/admin/orders', listOrdersController)
-app.route('/admin/discount').put(updateDiscountController)
+app.route('/admin/discount/:id').put(updateDiscountController)
 
 // start the Express server
 app.listen(port, () => {

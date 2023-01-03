@@ -21,7 +21,15 @@ export const createOrderService = (
 	const errors: string[] = []
 
 	try {
-		const discount = Discount.findByCode(req.discount)
+		if (req.items && req.items.length) {
+			const [orderItems, itemErrors] = buildOrderItems(req.items)
+			order.items = orderItems
+			errors.push(...itemErrors)
+		} else {
+			errors.push('The order must have items')
+		}
+
+		let discount = Discount.findByCode(req.discount)
 		if (req.discount && !discount) {
 			errors.push(`Discount not found: ${req.discount}`)
 		} else if (
@@ -29,15 +37,13 @@ export const createOrderService = (
 			discount instanceof EveryNthOrderDiscount &&
 			!discount.isEligible()
 		) {
+			discount = null
 			errors.push(`Sorry!  This discount is no longer available.`)
 		}
 
-		if (req.items && req.items.length) {
-			const [orderItems, itemErrors] = buildOrderItems(req.items)
-			order.items = orderItems
-			errors.push(...itemErrors)
-		} else {
-			errors.push('The order must have items')
+		if (discount) {
+			order.discountCode = discount.code
+			order.discountAmount = discount.calculate(order)
 		}
 
 		if (errors.length === 0) {
