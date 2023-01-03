@@ -53,7 +53,7 @@ describe('Order Services', () => {
 			})
 			expect(order).toBeNull()
 			expect(errors.length).toBe(1)
-			expect(errors[0]).toMatch(/This discount is no longer available/)
+			expect(errors[0]).toMatch(/This discount is not available/)
 		})
 
 		it('returns an error if the product is not found', () => {
