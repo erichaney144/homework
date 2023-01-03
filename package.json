@@ -7,7 +7,7 @@
 		"build": "npm run clean && tsc",
 		"clean": "rm -rf dist",
 		"watch": "tsc -w",
-		"dev:distro": "export NODE_PATH=dist; nodemon ./dist/server.js",
+		"dev": "export NODE_PATH=dist; nodemon ./dist/server.js",
 		"test": "jest",
 		"start": "export NODE_PATH=dist; node dist/server.js"
 	},

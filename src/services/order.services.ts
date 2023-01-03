@@ -38,7 +38,7 @@ export const createOrderService = (
 			!discount.isEligible()
 		) {
 			discount = null
-			errors.push(`Sorry!  This discount is no longer available.`)
+			errors.push(`Sorry!  This discount is not available.`)
 		}
 
 		if (discount) {

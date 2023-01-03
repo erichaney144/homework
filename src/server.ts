@@ -1,6 +1,7 @@
 import { updateDiscountController } from 'controllers/admin/discount/update.discount'
 import { listOrdersController } from 'controllers/admin/order/list.orders'
 import { getDiscountByCodeController } from 'controllers/discount/by.code'
+import { homeController } from 'controllers/home'
 import { loginController } from 'controllers/login'
 import { logoutController } from 'controllers/logout'
 import { createOrderController } from 'controllers/order/create.order'
@@ -38,6 +39,14 @@ app.use(
 )
 
 // define a route handler for the default home page
+app.get('/', homeController)
+app.get('/postman_collection.json', (req, res) => {
+	res.header({ 'Content-type': 'application/json' })
+	res.header({
+		'Content-disposition': 'attachment; filename=postman_collection.json',
+	})
+	res.sendFile(__dirname.replace(/dist$/, '') + 'postman_collection.json')
+})
 app.get('/products', listProductsController)
 app.post('/login', loginController)
 app.post('/logout', logoutController)
