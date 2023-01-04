@@ -6,13 +6,13 @@ A special kind of discount is offered to customers after an admin-specified numb
 
 ## To test without running locally:
 
-The service is running on an EC2 instance at http://35.91.189.220:8080.
+The service is running on an EC2 instance at http://54.190.62.35:8080.
 
 Some GET endpoints for your browser:
 
-- http://35.91.189.220:8080/products
-- http://35.91.189.220:8080/discount/LUCKY_CUSTOMER
-- http://35.91.189.220:8080/admin/orders
+- http://54.190.62.35:8080/products
+- http://54.190.62.35:8080/discount/LUCKY_CUSTOMER
+- http://54.190.62.35:8080/admin/orders
 
 You can use Postman to test all of the endpoints using this [Postman Collection](postman_collection.json)
 
