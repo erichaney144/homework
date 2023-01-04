@@ -39,7 +39,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"code\": \"LUCKY_CUSTOMER\",\n    \"amount\": 10,\n    \"type\": \"FIXED\",\n    \"n\": 3\n}"
+							"raw": "{\n    \"code\": \"LUCKY_CUSTOMER\",\n    \"amount\": 10,\n    \"type\": \"FIXED\",\n    \"n\": 2\n}"
 						},
 						"url": {
 							"raw": "{{host}}/admin/discount/2",
@@ -154,6 +154,33 @@
 					"path": [
 						"discount",
 						"LUCKY_CUSTOMER"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\": \"eric\", \"password\": \"password123\"}"
+				},
+				"url": {
+					"raw": "{{host}}/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"login"
 					]
 				}
 			},
