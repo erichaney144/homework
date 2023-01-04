@@ -26,7 +26,7 @@ seedDiscounts()
 
 app.use(
 	cors({
-		origin: ['http://localhost:3000'],
+		origin: ['http://localhost:3000', 'http://54.190.62.35'],
 	})
 )
 app.use(bodyParser.json())
