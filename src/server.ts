@@ -38,7 +38,6 @@ app.use(
 	})
 )
 
-// define a route handler for the default home page
 app.get('/', homeController)
 app.get('/postman_collection.json', (req, res) => {
 	res.header({ 'Content-type': 'application/json' })
