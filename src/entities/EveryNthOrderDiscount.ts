@@ -9,11 +9,11 @@ export class EveryNthOrderDiscount extends Discount<EveryNthOrderDiscount> {
 		const orders = EntityManager.all(Order) as Order[]
 		let numberOfOrdersSinceLastUsed = 0
 		orders.forEach(o => {
+			++numberOfOrdersSinceLastUsed
 			if (o.discountCode == this.code) {
 				numberOfOrdersSinceLastUsed = 0
 			}
-			++numberOfOrdersSinceLastUsed
 		})
-		return numberOfOrdersSinceLastUsed >= this.n
+		return numberOfOrdersSinceLastUsed + 1 >= this.n
 	}
 }

@@ -52,12 +52,12 @@ export class EntityManager {
 
 	static find<T extends BaseEntity<T>>(
 		klass: { prototype: T },
-		filters: Partial<{ [key in keyof T]: string | number }>
+		filters?: Partial<{ [key in keyof T]: string | number }>
 	): T[] {
 		// not correct typing
 		const entities = EntityManager.all(klass as unknown as typeof BaseEntity)
 		return entities.filter(e => {
-			return Object.entries(filters).reduce((allMatch, [k, v]) => {
+			return Object.entries(filters || {}).reduce((allMatch, [k, v]) => {
 				return allMatch && (e as any)[k] === v
 			}, true)
 		}) as T[]
